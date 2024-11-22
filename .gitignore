@@ -4,4 +4,5 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
-env/
+# 排除env结尾的目录
+**env/

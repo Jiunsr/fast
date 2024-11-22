@@ -76,14 +76,14 @@ function Login() {
         gap={4}
         centerContent
       >
-        <Image
+        {/* <Image
           src={Logo}
           alt="FastAPI logo"
           height="auto"
           maxW="2xs"
           alignSelf="center"
           mb={4}
-        />
+        /> */}
         <FormControl id="username" isInvalid={!!errors.username || !!error}>
           <Input
             id="username"
