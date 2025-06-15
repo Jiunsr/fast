@@ -17,8 +17,59 @@ from app.utils import (
     send_email,
     verify_password_reset_token,
 )
+import pronouncing
+import pyttsx3
+import epitran, pyphen
+from eng_syl.syllabify import Syllabel
+from eng_syl.onceler import Onceler
+from eng_syl.phonify import onc_to_phon
+
+
+epi = epitran.Epitran('eng-Latn')                 # IPA 转写器
+dic = pyphen.Pyphen(lang='en_US')                 # 拼写拆分器
 
 router = APIRouter(tags=["login"])
+
+
+@router.get("/login/word")
+def get_phonemes(word: str) -> Any:
+    """
+    传入word单词返回音标
+    """
+    # phonemes = pronouncing.phones_for_word(word)
+    # if not phonemes:
+    #     raise HTTPException(status_code=404, detail="No phonemes found for the word")
+    
+    # 使用pyttsx3将单词转换为语音
+    engine = pyttsx3.init()
+    engine.say(word)
+    engine.runAndWait()
+
+    # 音节拆分
+    ipa = epi.transliterate(word)                     # 得到 IPA 音标
+    spell_syll = dic.inserted(word).split('-')       # 拼写拆分
+
+    # # 使用 eng_syl 库进行音节拆分
+    # syll = Syllabel()
+    # onc = Onceler()
+    # hyph = onc.onc_split(word)         # e.g. "in-for-ma-tion"
+    # sylls = hyph.split('-')             # ['in', 'for', 'ma', 'tion']
+
+    # # # Step 2. IPA 估算
+    phon = onc_to_phon()
+    ipa_slices = phon.ipafy(spell_syll)
+
+    # Step 3. 结构拆解
+
+    return {
+        "word": word,
+        # "syllables": sylls,
+        "ipa_slices": ipa_slices,
+        # "syllable_onc": onstrs,
+        "ipa": ipa,
+        "spell_syll": spell_syll,
+    }
+
 
 
 @router.post("/login/access-token")

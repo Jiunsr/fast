@@ -1,3 +1,6 @@
+[tool.hatch.metadata]
+allow-direct-references = true
+
 [project]
 name = "app"
 version = "0.1.0"
@@ -21,6 +24,8 @@ dependencies = [
     "pydantic-settings<3.0.0,>=2.2.1",
     "sentry-sdk[fastapi]<2.0.0,>=1.40.6",
     "pyjwt<3.0.0,>=2.8.0",
+    "panphon @ git+https://github.com/DRobinson4105/panphon.git@c3aa61250ea9cbc208d67013eaa874c022724570",
+    "epitran==1.26.0",
 ]
 
 [tool.uv]
