@@ -36,7 +36,7 @@ def get_phonemes(word: str) -> Any:
     """
     传入word单词返回音标
     """
-    # phonemes = pronouncing.phones_for_word(word)
+    phonemes = pronouncing.phones_for_word(word)
     # if not phonemes:
     #     raise HTTPException(status_code=404, detail="No phonemes found for the word")
     
@@ -47,7 +47,7 @@ def get_phonemes(word: str) -> Any:
 
     # 音节拆分
     ipa = epi.transliterate(word)                     # 得到 IPA 音标
-    spell_syll = dic.inserted(word).split('-')       # 拼写拆分
+    spell_syll = dic.inserted(word)       # 拼写拆分
 
     # # 使用 eng_syl 库进行音节拆分
     # syll = Syllabel()
@@ -56,18 +56,20 @@ def get_phonemes(word: str) -> Any:
     # sylls = hyph.split('-')             # ['in', 'for', 'ma', 'tion']
 
     # # # Step 2. IPA 估算
-    phon = onc_to_phon()
-    ipa_slices = phon.ipafy(spell_syll)
+    # phon = onc_to_phon()
+    # ipa_slices = phon.ipafy(spell_syll)
 
     # Step 3. 结构拆解
 
     return {
         "word": word,
         # "syllables": sylls,
-        "ipa_slices": ipa_slices,
+        # "ipa_slices": ipa_slices,
         # "syllable_onc": onstrs,
-        "ipa": ipa,
-        "spell_syll": spell_syll,
+        
+        "ipa": ipa, # 音标
+        "spell_syll": spell_syll, # 单词音节
+        "phonemes": phonemes, # 音素
     }
 
 
