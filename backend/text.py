@@ -15,7 +15,17 @@ dic = pyphen.Pyphen(lang="en_US")  # 拼写拆分器
 
 text = [
     # "syllable",
-    "syllabify",
+    # "eraser",
+    # "book",
+    # "black",
+    # "bird",
+    # "mouse",
+    # "pencil",
+    # "glue",
+    # "nose",
+    # "leg",
+    # "mouth",
+    "rabbit",
 ]
 
 # cmu = cmudict.dict()
