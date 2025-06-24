@@ -2,16 +2,17 @@ import requests
 from phonemizer import phonemize
 from phonemizer.separator import Separator
 import pyphen
-# import pronouncing
 from arpa2ipa import arpa_to_ipa
 from syllabify import syllabify, pprint
 from g2p_en import G2p
-import nltk
+
+# 
+# import nltk
 # nltk.download('averaged_perceptron_tagger_eng')
 # nltk.download('cmudict')
-from nltk.corpus import cmudict
-
-dic = pyphen.Pyphen(lang="en_US")  # 拼写拆分器
+# from nltk.corpus import cmudict
+# cmu = cmudict.dict()
+# print('cmu:', cmu[text[0].lower()])
 
 text = [
     # "syllable",
@@ -28,8 +29,6 @@ text = [
     "rabbit",
 ]
 
-# cmu = cmudict.dict()
-# print('cmu:', cmu[text[0].lower()])
 
 # phn is a list of 190 phonemized sentences
 # phn = phonemize(
@@ -46,7 +45,7 @@ phn = phonemize(
     language='en-us',
     backend='espeak',
     # separator=Separator(phone=' ', word=' ')
-    )
+)
 
 # phn = phonemize(
 #     text,
@@ -55,9 +54,13 @@ phn = phonemize(
 #     separator=Separator(phone='|')
 # )
 
+# 单词
 print('text:', text)
+
+# 拼写拆分器
+dic = pyphen.Pyphen(lang="en_US")
 print('spell:', dic.inserted(text[0]))
-# phones = pronouncing.phones_for_word(text[0])
+
 g2p = G2p()
 phones = g2p(text[0])
 print('phn:', phn)

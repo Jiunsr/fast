@@ -1,7 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
-import requests
 from phonemizer import phonemize
 from phonemizer.separator import Separator
 import pyphen

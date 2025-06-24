@@ -1,0 +1,59 @@
+{
+    "wordRank": 10,
+    "headWord": "your",
+    "content": {
+        "word": {
+            "wordHead": "your",
+            "wordId": "PEPXiaoXue3_1_10",
+            "content": {
+                "sentence": {
+                    "sentences": [
+                        {
+                            "sContent": "Could you move your car?",
+                            "sCn": "你能把你的车挪一下吗？"
+                        },
+                        {
+                            "sContent": "Is that your brother over there?",
+                            "sCn": "那边的是你弟弟吗？"
+                        },
+                        {
+                            "sContent": "Don’t worry. It’s not your fault.",
+                            "sCn": "别担心，这不是你的错。"
+                        },
+                        {
+                            "sContent": "Be aware of your own feelings.",
+                            "sCn": "要注意自己的情绪。"
+                        }
+                    ],
+                    "desc": "例句"
+                },
+                "usphone": "jʊər; jʊr",
+                "ukphone": "jɔ:(r)",
+                "ukspeech": "your&type=1",
+                "phrase": {
+                    "phrases": [
+                        {
+                            "pContent": "on your back",
+                            "pCn": "在你背上；仰卧"
+                        }
+                    ],
+                    "desc": "短语"
+                },
+                "usspeech": "your&type=2",
+                "trans": [
+                    {
+                        "tranCn": "你（们）的",
+                        "descOther": "英释",
+                        "descCn": "中释",
+                        "tranOther": "used when speaking or writing to one or more people to show that something belongs to them or is connected with them"
+                    }
+                ]
+            }
+        }
+    },
+    "bookId": "PEPXiaoXue3_1"
+}
+
+Female
+
+Male
