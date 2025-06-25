@@ -1,0 +1,142 @@
+{
+    "wordRank": 44,
+    "headWord": "funny",
+    "content": {
+        "word": {
+            "wordHead": "funny",
+            "wordId": "PEPXiaoXue3_1_44",
+            "content": {
+                "sentence": {
+                    "sentences": [
+                        {
+                            "sContent": "the funniest man in Britain",
+                            "sCn": "英国最滑稽的男人"
+                        },
+                        {
+                            "sContent": "If this is your idea of a joke, I don’t find it at all funny .",
+                            "sCn": "如果你觉得这是个玩笑，那我认为它一点也不好笑。"
+                        },
+                        {
+                            "sContent": "Luckily, when I explained the situation, he saw the funny side (= recognized that it was partly funny ) .",
+                            "sCn": "好在我把情况解释了以后，他看到了好笑的一面。"
+                        },
+                        {
+                            "sContent": "His laughter stopped her mid-sentence. ‘ What’s so funny? ’ she demanded.",
+                            "sCn": "他的笑声打断了她的话。“有什么好笑的？”她厉声问道。"
+                        },
+                        {
+                            "sContent": "(= don’t laugh ) , Paul; poor Teresa was nearly in tears.",
+                            "sCn": "没什么好笑的，保罗，可怜的特雷莎都快哭了。"
+                        }
+                    ],
+                    "desc": "例句"
+                },
+                "usphone": "'fʌni",
+                "syno": {
+                    "synos": [
+                        {
+                            "pos": "adj",
+                            "tran": "有趣的；滑稽的；奇异的",
+                            "hwds": [
+                                {
+                                    "w": "colorful"
+                                },
+                                {
+                                    "w": "fantastic"
+                                }
+                            ]
+                        },
+                        {
+                            "pos": "n",
+                            "tran": "滑稽人物",
+                            "hwds": [
+                                {
+                                    "w": "comedian"
+                                }
+                            ]
+                        }
+                    ],
+                    "desc": "同近"
+                },
+                "ukphone": "'fʌnɪ",
+                "ukspeech": "funny&type=1",
+                "phrase": {
+                    "phrases": [
+                        {
+                            "pContent": "feel funny",
+                            "pCn": "[口语]"
+                        },
+                        {
+                            "pContent": "funny story",
+                            "pCn": "幽默故事"
+                        },
+                        {
+                            "pContent": "funny bone",
+                            "pCn": "肘的尺骨端；幽默感"
+                        },
+                        {
+                            "pContent": "funny picture",
+                            "pCn": "有趣的图片"
+                        },
+                        {
+                            "pContent": "funny business",
+                            "pCn": "n. 不道德的行为；不规矩的事"
+                        }
+                    ],
+                    "desc": "短语"
+                },
+                "relWord": {
+                    "desc": "同根",
+                    "rels": [
+                        {
+                            "pos": "adj",
+                            "words": [
+                                {
+                                    "hwd": "fun",
+                                    "tran": " 供娱乐用的"
+                                }
+                            ]
+                        },
+                        {
+                            "pos": "adv",
+                            "words": [
+                                {
+                                    "hwd": "funnily",
+                                    "tran": " 有趣地，滑稽地；古怪的"
+                                }
+                            ]
+                        },
+                        {
+                            "pos": "n",
+                            "words": [
+                                {
+                                    "hwd": "fun",
+                                    "tran": " 乐趣；玩笑；有趣的人或事"
+                                }
+                            ]
+                        },
+                        {
+                            "pos": "vi",
+                            "words": [
+                                {
+                                    "hwd": "fun",
+                                    "tran": " 开玩笑"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "usspeech": "funny&type=2",
+                "trans": [
+                    {
+                        "tranCn": "滑稽的；好笑的",
+                        "descOther": "英释",
+                        "descCn": "中释",
+                        "tranOther": "making you laugh"
+                    }
+                ]
+            }
+        }
+    },
+    "bookId": "PEPXiaoXue3_1"
+}
