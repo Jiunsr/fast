@@ -11,7 +11,7 @@ response = client.chat.completions.create(
         {
             "role": "user",
             "content": """
-        请根据我提供的英文单词 syllable，完成以下任务，并仅返回标准 JSON 格式：
+        请根据我提供的英文单词 syllable，完成以下要求，并仅返回标准 JSON 格式：
         1. 将单词按发音音节划分，拼写形式，用连字符连接，如 "e-ra-ser"（字段：syl=）。
         2. 给出每个音节对应的美式 IPA 音标数组（字段：to_ipa）。
         3. 给出单词中每个字母与其对应的美式 IPA 音标的精确映射（字段：to_ipa_pro）。
