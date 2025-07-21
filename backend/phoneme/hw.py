@@ -7,14 +7,6 @@ Note: ssml must be well-formed according to:
 
 from google.cloud import texttospeech
 
-import os
-
-print("HTTPS_PROXY =", os.environ.get("HTTPS_PROXY"))
-print("HTTP_PROXY =", os.environ.get("HTTP_PROXY"))
-
-os.environ["HTTP_PROXY"] = "http://192.168.31.20:1080"
-os.environ["HTTPS_PROXY"] = "http://192.168.31.20:1080"
-
 # Instantiates a client
 client = texttospeech.TextToSpeechClient()
 
@@ -32,7 +24,7 @@ client = texttospeech.TextToSpeechClient()
 # """
 ssml_text = """
 <speak>
-  <phoneme alphabet="ipa" ph="pɛnsəl">pencil</phoneme>
+  <phoneme alphabet="ipa" ph="sː">ss</phoneme>
 </speak>
 """
 
