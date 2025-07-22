@@ -7,7 +7,9 @@ app = FastAPI(title="Text-to-Speech API", version="1.0.0")
 
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
 
 @app.get("/health")
 async def health_check():
@@ -29,6 +31,7 @@ polly = session.client("polly")
 class IpaToSpeechRequest(BaseModel):
     ipa: Optional[str] = None
     text: Optional[str] = None
+
 
 @app.post("/speech")
 async def speech(request: IpaToSpeechRequest):
@@ -52,7 +55,7 @@ async def speech(request: IpaToSpeechRequest):
             VoiceId="Joanna",
             # 传ipa时需要使用SSML，英语句子使用text格式
             TextType="ssml" if request.ipa else "text",
-            Engine="neural"
+            Engine="neural",
         )
     except (BotoCoreError, ClientError) as error:
         # The service returned an error, exit gracefully
@@ -66,7 +69,7 @@ async def speech(request: IpaToSpeechRequest):
         # ensure the close method of the stream object will be called automatically
         # at the end of the with statement's scope.
         with closing(response["AudioStream"]) as stream:
-            
+
             try:
                 # 返回文件二进制流
                 return return_audio(stream)
@@ -80,9 +83,11 @@ async def speech(request: IpaToSpeechRequest):
         # The response didn't contain audio data, exit gracefully
         print("Could not stream audio")
         sys.exit(-1)
-        
+
 
 from io import BytesIO
+
+
 # 假设你已经得到了第三方的 stream（是一个类文件对象）
 def return_audio(stream):
     # 把文件内容读进内存
@@ -95,16 +100,17 @@ def return_audio(stream):
         media_type="audio/mpeg",
         headers={
             "Content-Disposition": f'attachment; filename="{uuid.uuid4().hex}.mp3"'
-        }
+        },
     )
 
 
 # 查询单词
 from wordfreq import word_frequency
-from fuzzywuzzy import fuzz
+from rapidfuzz.fuzz import partial_ratio
 
 # 准备前置条件
-english_words = set(open('words_alpha.txt').read().split())
+english_words = set(open("words_alpha.txt").read().split())
+
 
 # 单词包含关键字的单词查询
 def ranked_suggestions(query, words, limit=10):
@@ -113,8 +119,8 @@ def ranked_suggestions(query, words, limit=10):
         scored = []
 
         for word in candidates:
-            freq = word_frequency(word, 'en')
-            sim = fuzz.partial_ratio(query, word) / 100
+            freq = word_frequency(word, "en")
+            sim = partial_ratio(query, word) / 100
             score = freq * sim
             scored.append((word, score))
 
@@ -132,8 +138,8 @@ def ranked_prefix_suggestions(query, words, limit=10):
         scored = []
 
         for word in candidates:
-            freq = word_frequency(word, 'en')
-            sim = fuzz.partial_ratio(query, word) / 100
+            freq = word_frequency(word, "en")
+            sim = partial_ratio(query, word) / 100
             score = freq * sim
             scored.append((word, score))
 
@@ -148,13 +154,20 @@ class QueryWordRequest(BaseModel):
     word: Optional[str] = None
     type: Optional[int] = None
 
+
+# 执行耗时
+import time
+
+
 # 用单词关键字母查询单词
 @app.post("/query-word")
 async def query_word(request: QueryWordRequest):
 
     if not request.word:
         raise HTTPException(status_code=400, detail="Word query is required")
-    
+
+    _time_start = time.time()
+
     # 监测报错，报错返回[]
     try:
         if request.type == 0:
@@ -169,4 +182,7 @@ async def query_word(request: QueryWordRequest):
         print(f"Error during word query: {e}")
         suggestions = []
 
-    return {"suggestions": suggestions}
+    _time_end = time.time()
+    print(f"耗时毫秒: {(_time_end - _time_start) * 1000:.2f}ms")
+
+    return {"suggestions": suggestions, "time": (_time_end - _time_start) * 1000}
