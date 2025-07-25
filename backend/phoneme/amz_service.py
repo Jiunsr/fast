@@ -104,47 +104,60 @@ def return_audio(stream):
     )
 
 
-# 查询单词
+# 查询单词候选词
 from wordfreq import word_frequency
 from rapidfuzz.fuzz import partial_ratio
+from functools import lru_cache
+from concurrent.futures import ThreadPoolExecutor
+import cProfile
 
-# 准备前置条件
-english_words = set(open("words_alpha.txt").read().split())
+# 加载词表
+with open("words_alpha.txt") as f:
+    english_words = set(f.read().split())
 
+@lru_cache(maxsize=10000)
+def cached_word_frequency(word):
+    return word_frequency(word, "en")
 
-# 单词包含关键字的单词查询
-def ranked_suggestions(query, words, limit=10):
+def score_word(word, query):
+    freq = cached_word_frequency(word)
+    sim = partial_ratio(query, word) / 100
+    return (word, freq * sim)
+
+def ranked_suggestions(query, words, limit=10, max_word_length=20, min_freq=1e-6):
     try:
-        candidates = [word for word in words if query in word]
-        scored = []
+        # 生成器方式，提前筛选词长和最小频率
+        candidates = (
+            word for word in words
+            if query in word and len(word) <= max_word_length and cached_word_frequency(word) >= min_freq
+        )
 
-        for word in candidates:
-            freq = word_frequency(word, "en")
-            sim = partial_ratio(query, word) / 100
-            score = freq * sim
-            scored.append((word, score))
+        with ThreadPoolExecutor() as executor:
+            scored = list(executor.map(lambda w: score_word(w, query), candidates))
 
         scored.sort(key=lambda x: x[1], reverse=True)
         return [word for word, score in scored[:limit]]
+
     except Exception as e:
         print(f"Error during ranked suggestions: {e}")
         return []
 
 
 # 单词前缀查询
-def ranked_prefix_suggestions(query, words, limit=10):
+def ranked_prefix_suggestions(query, words, limit=10, max_word_length=20, min_freq=1e-6):
     try:
-        candidates = [word for word in words if word.startswith(query)]
-        scored = []
+        # 筛选：以 query 为前缀、长度符合、频率足够
+        candidates = (
+            word for word in words
+            if word.startswith(query) and len(word) <= max_word_length and cached_word_frequency(word) >= min_freq
+        )
 
-        for word in candidates:
-            freq = word_frequency(word, "en")
-            sim = partial_ratio(query, word) / 100
-            score = freq * sim
-            scored.append((word, score))
+        with ThreadPoolExecutor() as executor:
+            scored = list(executor.map(lambda w: score_word(w, query), candidates))
 
         scored.sort(key=lambda x: x[1], reverse=True)
         return [word for word, score in scored[:limit]]
+
     except Exception as e:
         print(f"Error during ranked prefix suggestions: {e}")
         return []
