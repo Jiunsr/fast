@@ -107,6 +107,7 @@ def return_audio(stream):
 # 查询单词
 from wordfreq import word_frequency
 from rapidfuzz.fuzz import partial_ratio
+from fuzzywuzzy import fuzz
 
 # 准备前置条件
 english_words = set(open("words_alpha.txt").read().split())

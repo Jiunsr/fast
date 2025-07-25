@@ -1,9 +1,0 @@
-fastapi==0.115.13
-uvicorn==0.34.3
-pydantic==2.11.7
-phonemizer==3.3.0
-pyphen==0.14.0
-arpa2ipa==0.1.0
-g2p-en==2.1.0
-nltk==3.8.1
-google-cloud-texttospeech==2.16.3 
