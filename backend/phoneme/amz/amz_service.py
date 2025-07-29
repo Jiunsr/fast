@@ -109,7 +109,6 @@ from wordfreq import word_frequency
 from rapidfuzz.fuzz import partial_ratio
 from functools import lru_cache
 from concurrent.futures import ThreadPoolExecutor
-import cProfile
 
 # 加载词表
 with open("words_alpha.txt") as f:

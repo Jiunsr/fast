@@ -1,0 +1,31 @@
+启动守护进程
+
+前置条件：配置supervisord，创建必要文件
+/etc/supervisord/
+    supervisord.conf
+    conf.d/
+        tts_api.ini
+        
+输出配置文件：
+    echo_supervisord_conf > /etc/supervisord/supervisord.conf
+包含子文件，修改supervisord.conf最后一行：
+    files = /etc/supervisord/conf.d/*.ini
+创建tts_api.ini：
+    [program:tts_api]
+    directory=/opt/phoneme
+    command=python3 api.py
+    autostart=true
+    autorestart=true
+    stderr_logfile=/opt/phoneme/log/tts_api.err.log
+    stdout_logfile=/opt/phoneme/log/tts_api.out.log
+    user=root
+    environment=PYTHONUNBUFFERED=1
+
+启动程序
+supervisord -c /etc/supervisord/supervisord.conf
+supervisorctl -c /etc/supervisord/supervisord.conf reread
+supervisorctl -c /etc/supervisord/supervisord.conf update
+supervisorctl -c /etc/supervisord/supervisord.conf status
+
+停止所有进程
+pkill supervisord
