@@ -198,3 +198,27 @@ async def query_word(request: QueryWordRequest):
     print(f"耗时毫秒: {(_time_end - _time_start) * 1000:.2f}ms")
 
     return {"suggestions": suggestions, "time": (_time_end - _time_start) * 1000}
+
+
+# 调用WeixinLinkFetcher，得到跳转链接
+from wx_url import WeixinLinkFetcher
+fetcher = WeixinLinkFetcher()
+
+
+@app.get("/weixin-link")
+async def weixin_link(url: str):
+    """获取微信公众号 H5 页面跳转到微信的真实链接"""
+    print(f"Received URL: {url}")
+
+
+    if not url:
+        raise HTTPException(status_code=400, detail="URL is required")
+
+    link = fetcher.get_weixin_link(url)
+
+    # fetcher.quit()
+
+    if link:
+        return {"link": link}
+    else:
+        raise HTTPException(status_code=404, detail="Weixin link not found")
