@@ -200,25 +200,39 @@ async def query_word(request: QueryWordRequest):
     return {"suggestions": suggestions, "time": (_time_end - _time_start) * 1000}
 
 
-# 调用WeixinLinkFetcher，得到跳转链接
-from wx_url import WeixinLinkFetcher
-fetcher = WeixinLinkFetcher()
-
+from httpx import AsyncClient
 
 @app.get("/weixin-link")
 async def weixin_link(url: str):
     """获取微信公众号 H5 页面跳转到微信的真实链接"""
     print(f"Received URL: {url}")
 
-
+    # 检查 URL 参数是否存在
     if not url:
-        raise HTTPException(status_code=400, detail="URL is required")
+        raise HTTPException(status_code=400, detail="URL parameter is required")
 
-    link = fetcher.get_weixin_link(url)
+    # 用http库调用 https://mp.weixin.qq.com/mp/jumptoweixin Content-Type = text/plain
+    # 传入body内容 link=https://mp.weixin.qq.com/s/xXf3zL5FI3s5LOT2Fk7Uqw
+    # 返回link
 
-    # fetcher.quit()
+    async with AsyncClient() as client:
+        try:
+            response = await client.post(
+                "https://mp.weixin.qq.com/mp/jumptoweixin",
+                data={"link": url},
+                headers={"Content-Type": "text/plain"}
+            )
+            response.raise_for_status()  # 检查请求是否成功
+            data = response.json()
+            link = data.get("url")
+        except Exception as e:
+            # 如果错误，则返回原始 URL
+            link = url
+            print(f"Error fetching Weixin link: {e}")
 
+    # 返回跳转后的链接
     if link:
         return {"link": link}
-    else:
-        raise HTTPException(status_code=404, detail="Weixin link not found")
+    
+    # link为空返回原始 URL
+    return {"link": url}
