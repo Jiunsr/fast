@@ -10,11 +10,13 @@ if __name__ == "__main__":
 
     uvicorn.run(app, host="0.0.0.0", port=8000)
 
+import datetime
 
 @app.get("/health")
 async def health_check():
     """健康检查"""
-    return {"status": "healthy", "service": "text-to-speech-api"}
+    now = datetime.datetime.now()
+    return {"status": "healthy", "service": "text-to-speech-api", "timestamp": now.isoformat()}
 
 
 # amazon 文本转语音
